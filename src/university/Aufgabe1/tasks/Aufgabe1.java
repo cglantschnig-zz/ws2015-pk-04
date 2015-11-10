@@ -31,10 +31,15 @@
 
     Zusatzfragen:
     1. Welche Vor- und Nachteile hat iter im Vergleich zu rec?
+       Rekursiv ist in diesem Fall einfacher zu programmieren, da die Mathematische Grundlage bereits rekursiv programmiert ist
+       und man somit den Ansatz 1:1 übernehmen kann.
     2. Ist int als Ergebnistyp zur Lösung dieser Aufgabe geeignet? Warum? Welche Alternative(n) gibt es?
+       int ist geeignet, sofern man nicht vor hat den Wertebereich zu sprengen. Alternativen sind long oder Ganzzahlbasierte Eigenkreationen.
     3. Warum ist double kein geeigneter Ergebnistyp für diese Aufgabe?
+       Double ist nicht geeignet, da man bei dieser Rechenoperation nur mit Ganzen Zahlen arbeitet und man sonst auf Rundungsfehler achten müsste
     4. [optional] Vermutlich enthält Ihre erste Implementierung von rec zwei rekursive Aufrufe. Versuchen Sie rec so
        abzuändern, dass nur ein rekursiver Aufruf nötig ist. Wie wirkt sich die Änderung auf die Vor- und Nachteile aus?
+       Grundsätzlich ist es möglich (siehe rec2) jedoch muss man dann beim Aufruf die Anfangswerte mitliefern, die man extrahieren sollte.
 */
 public class Aufgabe1 {
 
@@ -42,5 +47,65 @@ public class Aufgabe1 {
     // (without empty lines or other output)
     public static void main(String[] args) {
 
+        for (int i = 0; i <= 30; i++) {
+            System.out.println(iter(i));
+        }
+
+        for (int i = 0; i <= 30; i++) {
+            System.out.println(rec(i));
+        }
+
+    }
+
+    public static int iter(int n) {
+        if (n < 0) {
+            return -1; // The case if there is an n smaller than 0
+        }
+        if (n == 0) {
+            return 1; // a special case
+        }
+        int prev2 = 0; // n - 2
+        int prev1 = 1; // n - 1
+
+        for (int i = 0; i < n; i++) {
+            if (prev2 < prev1) {
+                prev2 = prev1 + prev2;
+            }
+            else {
+                prev1 = prev1 + prev2;
+            }
+        }
+        return (prev1 > prev2) ? prev1 : prev2;
+    }
+
+    public static int rec(int n) {
+        if (n < 0) {
+            return -1; // The case if there is an n smaller than 0
+        }
+        if (n == 0) {
+            return 1; // a special case
+        }
+        return recHelper(n, 0, 1, 0);
+    }
+
+    private static int recHelper(int n, int position, int prev1, int prev2) {
+        if (position == n) {
+            return prev1;
+        }
+        return recHelper(n, position + 1, prev1 + prev2, prev1);
+    }
+
+    // Aufruf rec2(n, 0, 1, 0)
+    private static int rec2(int n, int position, int prev1, int prev2) {
+        if (n < 0) {
+            return -1; // The case if there is an n smaller than 0
+        }
+        if (n == 0) {
+            return 1; // a special case
+        }
+        if (position == n) {
+            return prev1;
+        }
+        return recHelper(n, position + 1, prev1 + prev2, prev1);
     }
 }
