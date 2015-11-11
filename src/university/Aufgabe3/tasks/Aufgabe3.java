@@ -26,25 +26,31 @@
 
     Zusatzfragen:
     1. Wieso kann man die Aufrufebene nicht direkt aus dem Wert von i ermitteln?
+       da i gegen 0 geht. das level jedoch geht in andere richtungen
     2. Warum sind die Werte von a, b und c nicht in jedem Aufruf gleich?
        Weil jeder Aufruf die Parameter vertauscht
     3. Welche Ergebnisse gibt rec zurück, wenn der erste Parameter gleich 5, 10, 15 bzw. 20 ist?
+       rec(5) = 63; rec(10) = 2047; rec(15) = 65535; rec(20) = 2097151;
     4. Hängt das zurückgegebene Ergebnis von den Parametern a, b und c ab?
        Nein. Diese Parameter sind nur für die Ausgabe relevant
 */
 public class Aufgabe3 {
 
+    private static int counter = 0;
     // just for testing ...
     public static void main(String[] args) {
-        rec(3, 'A', 'B', 'C', 1);
+        counter = 0;
+        rec(2, 'A', 'B', 'C', 1);
+        System.out.println(counter);
     }
 
     private static void rec(int i, char a, char b, char c, int level) {
         System.out.println("Aufrufebene " + level + ": i = " + i + ", a = " + a + ", b = " + b + ", c = " + c);
         if (i > 0) {
-            rec(i-1, a, c, b, 1);
+            rec(i-1, a, c, b, ++level);
             System.out.println("von " + a + " nach " + c);
-            rec(i-1, b, a, c, 1);
+            rec(i-1, b, a, c, level--);
         }
+        counter++;
     }
 }
