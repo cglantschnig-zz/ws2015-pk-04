@@ -19,7 +19,7 @@
 
     Zusatzfragen:
     1. Welche Unterschiede konnten Sie zwischen der rekursiven und iterativen Implementierung feststellen?
-       TODO: habe keine iterative Version programmiert
+       iterativ muss man sich um die indexe kümmern und man braucht mehr hilfsvariablen
 */
 public class Aufgabe2 {
 
